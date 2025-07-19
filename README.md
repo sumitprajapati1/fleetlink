@@ -1,4 +1,49 @@
 
+# FLEETLINK
+
+Logistic vehicles booking system
+
+
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/sumitprajapati1/fleetlink.git
+```
+
+Go to the project directory for starting backend
+
+```bash
+  cd server
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm start or node --watch src/server.js
+```
+Go to the project directory for starting frontend
+
+```bash
+  cd client
+```
+
+```bash
+  npm install
+```
+```bash
+  npm run dev
+```
+
+
 ## API Reference
 
 #### Vehicles APIs
