@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import { Truck } from "lucide-react";
 import AddVehiclePage from './AddVehiclePage';
 import SearchBookPage from './SearchBookPage';
+import BookingListPage from './BookingListPage';
 
-type ActiveTab = 'add' | 'search';
+type ActiveTab = 'add' | 'search' | 'booking';
 
 const FleetLinkApp: React.FC = () => {
   const [activeTab, setActiveTab] = useState<ActiveTab>('add');
@@ -46,10 +47,21 @@ const FleetLinkApp: React.FC = () => {
           >
             Search & Book
           </button>
+          <button
+            onClick={() => setActiveTab('booking')}
+            className={`px-6 py-3 rounded-md font-medium transition-colors ${
+              activeTab === 'booking'
+                ? 'bg-white text-blue-600 shadow-sm'
+                : 'text-gray-600 hover:text-gray-800'
+            }`}
+          >
+            Booking
+          </button>
         </div>
         {/* Tab Content */}
         {activeTab === 'add' && <AddVehiclePage />}
         {activeTab === 'search' && <SearchBookPage />}
+        {activeTab === 'booking' && <BookingListPage />}
       </div>
     </div>
   );
