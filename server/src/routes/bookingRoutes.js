@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import Booking from "../models/Booking.js";
 import Vehicle from "../models/Vehicle.js";
 import { calculateRideDuration } from "../utils/rideCalculator.js";
-import { AppError, errorHandler } from "../middlewares/errorHandler.js";
+import { AppError } from "../middleware/errorHandler.js";
 
 const router = express.Router();
 

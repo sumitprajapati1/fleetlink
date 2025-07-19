@@ -2,9 +2,9 @@ import express from "express";
 import { body, query, param, validationResult } from "express-validator";
 import Vehicle from "../models/Vehicle.js"
 import Booking from "../models/Booking.js"
-import { errorHandler } from "../middlewares/errorHandler.js";
-import AppError from "../utils/AppError.js";
+import {AppError} from "../middleware/errorHandler.js";
 import { calculateRideDuration } from "../utils/rideCalculator.js";
+
 const router = express.Router();
 
 const validateVehicle = [
