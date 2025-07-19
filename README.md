@@ -40,7 +40,7 @@ Go to the project directory for starting frontend
   npm install
 ```
 ```bash
-  npm run dev
+  pnpm dev
 ```
 
 
