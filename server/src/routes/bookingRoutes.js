@@ -29,39 +29,38 @@ router.post('/', validateBooking, async (req, res, next) => {
         }
         const estimatedRideDurationHours = calculateRideDuration(fromPincode, toPincode);
         const endDateTime = new Date(startDateTime.getTime() + estimatedRideDurationHours * 60 * 60 * 1000);
-        await session.withTransaction(async () => {
-            const vehicle = await Vehicle.findOne({ _id: vehicleId, isActive: true }).session(session);
-            if (!vehicle) {
-                throw new AppError('Vehicle not found', 404);
-            }
-            const conflictBooking = await Booking.findOne({
-                vehicleId: vehicleId,
-                status: { $ne: 'CANCELLED' },
-                $or: [
-                    { startTime: { $lt: endDateTime }, endTime: { $gt: startTime } }
-                ]
-            }).session(session);
-            if (conflictBooking) {
-                throw new AppError('Vehicle is already booked', 400);
-            }
-            const booking = new Booking({
-                vehicleId,
-                customerId: customerId.trim(),
-                fromPincode,
-                toPincode,
-                startTime: startDateTime,
-                endTime: endDateTime,
-                estimatedRideDurationHours,
-                status: 'BOOKED'
-            })
-            await booking.save({ session });
-            await booking.populate('vehicleId', 'name capacityKg tyres');
-        })
+        let booking;
+        const vehicle = await Vehicle.findOne({ _id: vehicleId, isActive: true });
+        if (!vehicle) {
+            throw new AppError('Vehicle not found', 404);
+        }
+        const conflictBooking = await Booking.findOne({
+            vehicleId: vehicleId,
+            status: { $ne: 'CANCELLED' },
+            $or: [
+                { startTime: { $lt: endDateTime }, endTime: { $gt: startTime } }
+            ]
+        });
+        if (conflictBooking) {
+            throw new AppError('Vehicle is already booked', 409);
+        }
+        booking = new Booking({
+            vehicleId,
+            customerId: customerId.trim(),
+            fromPincode,
+            toPincode,
+            startTime: startDateTime,
+            endTime: endDateTime,
+            estimatedRideDurationHours,
+            status: 'BOOKED'
+        });
+        await booking.save();
+        await booking.populate('vehicleId', 'name capacityKg tyres');
         res.status(201).json({
             success: true,
             message: "Booking created successfully",
             data: booking
-        })
+        });
     } catch (err) {
         next(err);
     }

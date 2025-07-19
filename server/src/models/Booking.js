@@ -37,8 +37,8 @@ const bookingSchema = new mongoose.Schema({
       },
       status: {
         type: String,
-        enum: ['CONFIRMED', 'CANCELLED', 'COMPLETED'],
-        default: 'CONFIRMED'
+        enum: ['BOOKED', 'CONFIRMED', 'CANCELLED', 'COMPLETED'],
+        default: 'BOOKED'
       },
       createdAt: {
         type: Date,
@@ -55,8 +55,6 @@ bookingSchema.pre('save',async function(next){
     this.updatedAt = Date.now();
     next();
 })
-
-bookingSchema.index({ customerId: 1, status: 1 },{unique:true});
 
 const Booking = mongoose.model('Booking',bookingSchema);
 export default Booking;

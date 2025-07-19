@@ -18,7 +18,7 @@ const validateAvailabilityQuery = [
     query('fromPincode').matches(/^\d{6}$/).notEmpty().withMessage('From pincode is required'),
     query('toPincode').matches(/^\d{6}$/).notEmpty().withMessage('To pincode is required'),
     query('startTime').isISO8601().withMessage('Start time must be in ISO 8601 format'),
-    query('endTime').isISO8601().withMessage('End time must be in ISO 8601 format'),
+    // query('endTime').isISO8601().withMessage('End time must be in ISO 8601 format'),
 ]
 
 
